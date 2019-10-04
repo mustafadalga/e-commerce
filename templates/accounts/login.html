@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="jumbotron text-center">
+    <h1>Login</h1>
+    </div>
+
+    <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Gönder</button>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<!-- Stripe Js -->
+<script src="https://js.stripe.com/v3/"></script>
+
+
+<!-- Js Render -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.4/jsrender.min.js"></script>
+{% include 'base/js_templates.html' %}
+
+
+<!-- Django Secure Ajax -->
+<script src="{%  static 'js/csrf.ajax.js' %}"></script>
+
+<!-- Ecommerce Custom Js -->
+<script src="{%  static 'js/ecommerce.js' %}"></script>
+
+<!-- Ecommerce Main Js -->
+<script src="{%  static 'js/ecommerce.main.js' %}"></script>
+

@@ -1,0 +1,10 @@
+<strong>Başlık:</strong>{{ object.title }}
+<br>
+<strong>Açıklama:</strong>{{ object.description }}
+
+
+{% if object.image %}
+
+<img src="{{ object.image.url }}" alt="" class="img-fluid" width="300" height="300">
+
+{% endif %}

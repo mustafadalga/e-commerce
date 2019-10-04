@@ -1,0 +1,25 @@
+{%  extends 'base.html' %}
+
+
+{% block content %}
+
+
+    <div class="jumbotron text-center">
+    <h1>{{ mesaj }}</h1>
+    <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <form method="POST" action="{% url 'contact' %}" class="contact-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

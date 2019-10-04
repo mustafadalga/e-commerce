@@ -1,0 +1,156 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "Iphone 1",
+        "slug": "iphone1",
+        "description": "Traceback (most recent call last):\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 84, in _execute\r\n    return self.cursor.execute(sql, params)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\sqlite3\\base.py\", line 383, in execute\r\n    return Database.Cursor.execute(self, query, params)\r\nsqlite3.OperationalError: no such column: products_product.descriptiosn\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"manage.py\", line 21, in <module>\r\n    main()\r\n  File \"manage.py\", line 17, in main\r\n    execute_from_command_line(sys.argv)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\__init__.py\", line 381, in execute_from_command_line\r\n    utility.execute()\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\__init__.py\", line 375, in execute\r\n    self.fetch_command(subcommand).run_from_argv(self.argv)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\base.py\", line 323, in run_from_argv\r\n    self.execute(*args, **cmd_options)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\base.py\", line 361, in execute\r\n    self.check()\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\base.py\", line 390, in check\r\n    include_deployment_checks=include_deployment_checks,\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\management\\base.py\", line 377, in _run_checks\r\n    return checks.run_checks(**kwargs)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\checks\\registry.py\", line 72, in run_checks\r\n    new_errors = check(app_configs=app_configs)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\checks\\urls.py\", line 13, in check_url_config\r\n    return check_resolver(resolver)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\core\\checks\\urls.py\", line 23, in check_resolver\r\n    return check_method()\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\urls\\resolvers.py\", line 399, in check\r\n    for pattern in self.url_patterns:\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\utils\\functional.py\", line 80, in __get__\r\n    res = instance.__dict__[self.name] = self.func(instance)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\urls\\resolvers.py\", line 584, in url_patterns\r\n    patterns = getattr(self.urlconf_module, \"urlpatterns\", self.urlconf_module)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\utils\\functional.py\", line 80, in __get__\r\n    res = instance.__dict__[self.name] = self.func(instance)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\urls\\resolvers.py\", line 577, in urlconf_module\r\n    return import_module(self.urlconf_name)\r\n  File \"C:\\Users\\Liduma\\AppData\\Local\\Programs\\Python\\Python37\\lib\\importlib\\__init__.py\", line 127, in import_module\r\n    return _bootstrap._gcd_import(name[level:], package, level)\r\n  File \"<frozen importlib._bootstrap>\", line 1006, in _gcd_import\r\n  File \"<frozen importlib._bootstrap>\", line 983, in _find_and_load\r\n  File \"<frozen importlib._bootstrap>\", line 967, in _find_and_load_unlocked\r\n  File \"<frozen importlib._bootstrap>\", line 677, in _load_unlocked\r\n  File \"<frozen importlib._bootstrap_external>\", line 728, in exec_module\r\n  File \"<frozen importlib._bootstrap>\", line 219, in _call_with_frames_removed\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\ecommerce\\urls.py\", line 25, in <module>\r\n    path('products/', include(('products.urls', 'products'), namespace='products')),\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\urls\\conf.py\", line 34, in include\r\n    urlconf_module = import_module(urlconf_module)\r\n  File \"C:\\Users\\Liduma\\AppData\\Local\\Programs\\Python\\Python37\\lib\\importlib\\__init__.py\", line 127, in import_module\r\n    return _bootstrap._gcd_import(name[level:], package, level)\r\n  File \"<frozen importlib._bootstrap>\", line 1006, in _gcd_import\r\n  File \"<frozen importlib._bootstrap>\", line 983, in _find_and_load\r\n  File \"<frozen importlib._bootstrap>\", line 967, in _find_and_load_unlocked\r\n  File \"<frozen importlib._bootstrap>\", line 677, in _load_unlocked\r\n  File \"<frozen importlib._bootstrap_external>\", line 728, in exec_module\r\n  File \"<frozen importlib._bootstrap>\", line 219, in _call_with_frames_removed\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\products\\urls.py\", line 3, in <module>\r\n    from .views import (\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\products\\views.py\", line 85, in <module>\r\n    class ProductDetailView(DetailView):\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\products\\views.py\", line 88, in ProductDetailView\r\n    print(queryset)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\models\\query.py\", line 250, in __repr__\r\n    data = list(self[:REPR_OUTPUT_SIZE + 1])\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\models\\query.py\", line 274, in __iter__\r\n    self._fetch_all()\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\models\\query.py\", line 1242, in _fetch_all\r\n    self._result_cache = list(self._iterable_class(self))\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\models\\query.py\", line 55, in __iter__\r\n    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\models\\sql\\compiler.py\", line 1100, in execute_sql\r\n    cursor.execute(sql, params)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 99, in execute\r\n    return super().execute(sql, params)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 67, in execute\r\n    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 76, in _execute_with_wrappers\r\n    return executor(sql, params, many, context)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 84, in _execute\r\n    return self.cursor.execute(sql, params)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\utils.py\", line 89, in __exit__\r\n    raise dj_exc_value.with_traceback(traceback) from exc_value\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\utils.py\", line 84, in _execute\r\n    return self.cursor.execute(sql, params)\r\n  File \"C:\\Users\\Liduma\\Desktop\\Django\\ecommerce\\dev\\lib\\site-packages\\django\\db\\backends\\sqlite3\\base.py\", line 383, in execute\r\n    return Database.Cursor.execute(self, query, params)\r\ndjango.db.utils.OperationalError: no such column: products_product.descriptiosn",
+        "price": "2845.00",
+        "image": "products/2019-09-10/Biohazard_reflective_by_submicron_C4oRM4b.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-10T15:04:03.953Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Uygulamalarla siber g\u00fcvenlik",
+        "slug": "uygulamalarla-siber-guvenlik",
+        "description": "Uygulamalarla siber g\u00fcvenlik",
+        "price": "39.99",
+        "image": "products/2019-09-10/asus-wallpaper-1920x1080.jpg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2019-09-10T15:07:54.813Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "Huawei 1",
+        "slug": "huawei-1",
+        "description": "Huawei 1",
+        "price": "39.99",
+        "image": "products/2019-09-10/graphics1_22.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-10T15:08:40.770Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "HP bilgisayar 1",
+        "slug": "hp-bilgisayar-1",
+        "description": "ac\u0131klama yok",
+        "price": "40.23",
+        "image": "products/2019-09-10/web_developer_wallpaper__code__by_plusjack-d7bmt54.jpg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2019-09-10T15:12:49.109Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "Logitech M170 Siyah Mouse 910-004642",
+        "slug": "logitech-m170-kablosuz-siyah-mouse-910-004642",
+        "description": "G\u00dcVEN\u0130L\u0130R 2,4 GHZ KABLOSUZ\r\n10 metre (33 feet) mesafeye kadar g\u00fc\u00e7l\u00fc, istikrarl\u0131 kablosuz ba\u011flant\u0131. Neredeyse hi\u00e7 gecikme veya kesinti olmadan g\u00fcvenle \u00e7al\u0131\u015fabilir ve oyun oynayabilirsiniz.\r\nmerve\r\n10 metreye kadar test edilen kablosuz aral\u0131k, bilgisayar kullan\u0131m ko\u015fullar\u0131na ve \u00e7evresel ko\u015fullara ba\u011fl\u0131 olarak k\u00fc\u00e7\u00fck de\u011fi\u015fiklikler g\u00f6sterebilir.\r\n12 AY P\u0130L \u00d6MR\u00dc\r\nPil de\u011fi\u015ftirmeden bir y\u0131la kadar kullanabilirsiniz. Pil \u00f6mr\u00fcn\u00fc uzatmak i\u00e7in mouse\u2019u kullanmad\u0131\u011f\u0131n\u0131z zamanlarda g\u00fcc\u00fc kapatmak \u00fczere A\u00e7ma/Kapama d\u00fc\u011fmesini kullan\u0131n. Pilinizin \u00f6mr\u00fc, bilgisayar\u0131 ve mouse\u2019u kullanma ko\u015fullar\u0131n\u0131za g\u00f6re k\u00fc\u00e7\u00fck de\u011fi\u015fiklikler g\u00f6sterebilir.\r\n\r\nTAK VE \u00c7ALI\u015eTIR BA\u011eLANTI\r\nM171 Kablosuz Mouse\u2019u tak\u0131n ve \u00e7al\u0131\u015ft\u0131r\u0131n. Tek yapman\u0131z gereken, al\u0131c\u0131y\u0131 bilgisayar\u0131n\u0131zdaki bir USB ba\u011flant\u0131 noktas\u0131na tak\u0131p hemen kullanmaya ba\u015flamak. Mouse\u2019unuzu kullanmaya ba\u015flamak i\u00e7in e\u015fle\u015ftirmenize veya yaz\u0131l\u0131m indirmenize gerek yoktur.\r\nKONFORLU VE HAREKETL\u0130\r\nMouse\u2019un \u015fekli, saatlerce konforlu kullan\u0131m i\u00e7in elinizi destekler. Her iki elle kullan\u0131ma uygun tasar\u0131m ve sa\u011f ve sol d\u00fc\u011fme fonksiyonlar\u0131n\u0131 yeniden atayabilme imkan\u0131 sayesinde M170, sa\u011f veya sol eliniz i\u00e7in ideal mouse\u2019lard\u0131r.\r\n\r\nBOYUTLAR:\r\nMouse (y\u00fckseklik x geni\u015flik x derinlik): 97,7 mm (3,85 in\u00e7) x 61,5 mm (2,42 in\u00e7) x 35,2 mm (1,39 in\u00e7)\r\nMouse A\u011f\u0131rl\u0131\u011f\u0131: Pil ile 70,5 g (2,49 oz)\r\n\r\nNano al\u0131c\u0131 (y\u00fckseklik x geni\u015flik x derinlik): 6,6 mm (0,24 in\u00e7) x 14,4 mm (0,57 in\u00e7) x 18,7 mm (0,74 in\u00e7)\r\nNano al\u0131c\u0131 A\u011f\u0131rl\u0131\u011f\u0131: 2,0 g (0,07 oz)\r\n\r\n\r\nTEKN\u0130K \u00d6ZELL\u0130KLER:\r\nBa\u011flant\u0131 T\u00fcr\u00fc: 2,4 Ghz kablosuz\r\nKablosuz aral\u0131k: 10 m (33 ft)\r\nPil: 1 AA\r\nPil \u00f6mr\u00fc: 1 y\u0131l\r\n\r\n\r\nPAKET \u0130\u00c7ER\u0130\u011e\u0130:\r\nMouse\r\nAl\u0131c\u0131\r\nKullan\u0131c\u0131 belgeleri\r\n\r\n\r\nS\u0130STEM GEREKS\u0130N\u0130MLER\u0130:\r\nWindows\u00ae 7, Windows 8, Windows 10 veya \u00fczeri\r\nMac OS\u00ae X 10.8 veya \u00fczeri\r\nChrome OS\u2122\r\nLinux\u00ae kernel 2.6+\r\nUSB ba\u011flant\u0131 noktas\u0131\r\nAyd\u0131nlatma\tYok\r\nBa\u011flant\u0131\tKablosuz\r\nButon Say\u0131s\u0131\t3\r\nDPI\t1000 DPI\r\nKullan\u0131m Amac\u0131\tEv - Ofis\r\nMouse Formu\tSa\u011f El, Sol El\r\nMouse Scroll-Tilt\tYok\r\nMouse Tipi\tOptik\r\nRGB\tYok\r\nDi\u011fer\r\nGaranti S\u00fcresi (Ay)\t24\r\nYurt D\u0131\u015f\u0131 Sat\u0131\u015f\tYok\r\nStok Kodu\tHBV000000ZJMK",
+        "price": "39.99",
+        "image": "products/2019-09-11/039_Template_Filters.mp4_snapshot_02.33.051.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-11T17:20:28.986Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "title": "Asus WT425 Kablosuz Optik Sessiz T\u0131klama \u00d6zellikli K\u0131rm\u0131z\u0131 Mouse",
+        "slug": "asus-wt425-kablosuz-optik-sessiz-tklama-ozellikli-krmz-mouse",
+        "description": "Asus WT425 Kablosuz Optik Sessiz T\u0131klama \u00d6zellikli K\u0131rm\u0131z\u0131 Mouse",
+        "price": "39.99",
+        "image": "products/2019-09-11/Screenshot_265.png",
+        "featured": true,
+        "active": true,
+        "timestamp": "2019-09-11T17:21:44.621Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+        "title": "ayakkab\u0131",
+        "slug": "ayakkab",
+        "description": "ayakkab\u0131",
+        "price": "39.99",
+        "image": "products/2019-09-11/Ekran_G\u00f6r\u00fcnt\u00fcs\u00fc_306.png",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-11T19:16:54.950Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+        "title": "yazl\u0131k ayakkab\u0131",
+        "slug": "yazlk-ayakkab",
+        "description": "yazl\u0131k ayakkab\u0131",
+        "price": "20.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-11T19:17:14.732Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+        "title": "\u015eapka",
+        "slug": "sapka",
+        "description": "\u015fapka",
+        "price": "1.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-11T19:25:24.150Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+        "title": "g\u00fcvenlik",
+        "slug": "guvenlik-zh0y",
+        "description": "ss",
+        "price": "39.99",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-12T18:13:03.228Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+        "title": "Lipton \u00c7ay",
+        "slug": "lipton-cay",
+        "description": "cay",
+        "price": "14.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2019-09-13T11:05:59.236Z"
+    }
+}
+]

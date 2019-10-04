@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block base_head %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron text-center">
+  <h1>{{ mesaj }}</h1>
+    <img src="{% static 'img/resim1.jpg' %}" class="img-fluid" alt="" width="300" height="150"/>
+  <p>Resize this responsive page to see the effect!</p>
+    {% if request.user.is_authenticated %}
+        <p>{{ premium }}</p>
+    {% endif %}
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 3</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

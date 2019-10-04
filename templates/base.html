@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'base/css.html' %}
+    {% block base_head %}
+    {% endblock %}
+
+</head>
+<body>
+{% include 'base/navbar.html' with brand_name="Ecommerce" %}
+
+<div class="container">
+
+    {% if messages %}
+        <div class="alert alert-success messages text-center">
+            {% for message in messages %}
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                    {{ message }}
+                <br>
+                </span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+
+
+    {% block content %} {% endblock %}
+</div>
+
+{% include 'base/js.html' %}
+
+{% block javascript %}
+
+
+{% endblock %}
+
+</body>
+</html>
