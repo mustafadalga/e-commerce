@@ -14,7 +14,7 @@ SECRET_KEY = 'pe(q8#hs8b2c#_l*iu=np=3dt!l&$b@k8+=qu(5#johj0$(1rn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.mustafadalga.tech']
+ALLOWED_HOSTS = [".herokuapp.com"]
 
 
 # Application definition
