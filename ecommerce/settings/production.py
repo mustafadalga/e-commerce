@@ -9,7 +9,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pe(q8#hs8b2c#_l*iu=np=3dt!l&$b@k8+=qu(5#johj0$(1rn'
+SECRET_KEY=os.environ.get('SECRET_KEY')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -48,14 +50,14 @@ AUTH_USER_MODEL="accounts.User"  #changes the builin user model to ours
 
 
 
-MAILCHIP_API_KEY="fb6526b7c95389d644dd04f632b29bf3-us20"
+MAILCHIP_API_KEY=os.environ.get("MAILCHIP_API_KEY")
 MAILCHIP_DATA_CENTER="us20"
-MAILCHIP_EMAIL_LIST_ID="3e6f34b9b6"
+MAILCHIP_EMAIL_LIST_ID=os.environ.get("MAILCHIP_EMAIL_LIST_ID")
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION= False
-STRIPE_SECRET_KEY="sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu" # Secret key
-STRIPE_PUB_KEY="pk_test_5wkb1M4U4Z0WN44BcoH2XnXJ00pa2DsSqv" #Publishable key
+STRIPE_SECRET_KEY=os.environ.get("STRIPE_SECRET_KEY","sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu")
+STRIPE_PUB_KEY=os.environ.get("STRIPE_PUB_KEY","pk_test_5wkb1M4U4Z0WN44BcoH2XnXJ00pa2DsSqv")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

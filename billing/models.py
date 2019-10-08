@@ -8,7 +8,8 @@ User = settings.AUTH_USER_MODEL
 
 import stripe
 
-stripe.api_key = "sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu"  # Secret key
+STRIPE_SECRET_KEY=getattr(settings,'STRIPE_SECRET_KEY',"sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu") # Secret key
+stripe.api_key = STRIPE_SECRET_KEY
 
 
 class BillingProfileManager(models.Manager):
