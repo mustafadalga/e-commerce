@@ -23,7 +23,7 @@ def marketing_pref_create_receiver(sender,instance,created,*args,**kwargs):
     if created:
        # status_code,response_data=Mailchimp().subscribe(instance.user.email)
        status_code,response_data=Mailchimp().add_email(instance.user.email)
-       print(response_data)
+       # print(response_data)
 
 # Üye olan kullanıcıların Pazarlama üyeliği oluşturulduğu an,aynı zamanda mailchimp listesine de ekle
 post_save.connect(marketing_pref_create_receiver,sender=MarketingPrefence)

@@ -98,7 +98,6 @@ $(document).ready(function () {
             }
         }
 
-
         // Handle form submission.
         var form = $('#payment-form');
         var btnLoad = form.find(".btn-load");
@@ -109,7 +108,6 @@ $(document).ready(function () {
 
             // display new button ui
             var $this = $(this)
-            // btnLoad = form.find(".btn-load")
             btnLoad.blur()
             var loadtime = 1000
             var currentTimeout;
@@ -126,16 +124,14 @@ $(document).ready(function () {
                     currentTimeout = displayBtnStatus(btnLoad, errorHtml, errorClasses, loadtime, currentTimeout)
                 } else {
                     // Send the token to your server.
-                    currentTimeout = displayBtnStatus(btnLoad, loadingHtml, loadingClasses, loadtime,currentTimeout)
+                    currentTimeout = displayBtnStatus(btnLoad, loadingHtml, loadingClasses, loadtime, currentTimeout)
                     stripeTokenHandler(nextUrl, result.token);
-
-
                 }
-
             });
         });
 
 
+        // Kart bilgileri ekleme  buton durumu
         function displayBtnStatus(element, newHtml, newClasses, loadTime, timeout) {
             // if (timeout) {
             //     clearTimeout(timeout)
@@ -143,8 +139,6 @@ $(document).ready(function () {
             if (!loadTime) {
                 loadTime = 1500
             }
-            // var defaultHtml = element.html()
-            // var defaultClases = element.attr("class")
             element.html(newHtml)
             element.removeClass(btnLoadDefaultClasses)
             element.addClass(newClasses)
@@ -153,9 +147,7 @@ $(document).ready(function () {
                 element.html(btnLoadDefaultHtml)
                 element.removeClass(newClasses)
                 element.addClass(btnLoadDefaultClasses)
-
             }, loadTime)
-
         }
 
 
@@ -181,13 +173,13 @@ $(document).ready(function () {
                         alert(succesMsg);
                     }
                     btnLoad.html(btnLoadDefaultHtml)
-                    btnLoad.attr("class",btnLoadDefaultClasses)
+                    btnLoad.attr("class", btnLoadDefaultClasses)
                     redirectToNext(nextUrl, 1500)
                 },
                 error: function (error) {
-                    $.alert({title:"Bir hata oluştu",content:"Lütfen kart bilgilerinizi girmeyi tekrar deneyiniz."})
-                        btnLoad.html(btnLoadDefaultHtml)
-                    btnLoad.attr("class",btnLoadDefaultClasses)
+                    $.alert({title: "Bir hata oluştu", content: "Lütfen kart bilgilerinizi girmeyi tekrar deneyiniz."})
+                    btnLoad.html(btnLoadDefaultHtml)
+                    btnLoad.attr("class", btnLoadDefaultClasses)
                 }
             });
             // {#// Insert the token ID into the form so it gets submitted to the server#}
