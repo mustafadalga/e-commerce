@@ -14,6 +14,19 @@ SECRET_KEY = 'pe(q8#hs8b2c#_l*iu=np=3dt!l&$b@k8+=qu(5#johj0$(1rn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangoicin2@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+
+MANAGERS=(
+    ("djangoicin2@gmail.com","Mustafa Dalga"),
+)
+ADMINS=MANAGERS
+
+
 ALLOWED_HOSTS = []
 
 
