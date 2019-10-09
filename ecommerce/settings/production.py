@@ -24,7 +24,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
 
 MANAGERS=(
-    ("djangoicin2@gmail.com","Mustafa Dalga"),
+    ("Mustafa Dalga","djangoicin2@gmail.com"),
 )
 ADMINS=MANAGERS
 
