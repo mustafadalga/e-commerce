@@ -23,7 +23,7 @@ EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
-BASE_URL="http://127.0.0.1:8000"
+BASE_URL="https://django-eticaret.herokuapp.com"
 
 MANAGERS=(
     ("Mustafa Dalga","djangoicin2@gmail.com"),
