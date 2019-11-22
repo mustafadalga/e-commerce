@@ -43,6 +43,14 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def is_digital(self):
+        qs=self.products.all() # every product
+        new_qs=qs.filter(is_digital=False)  # every product that is not digital
+        if new_qs.exists():
+            return False
+        return True
+
 
 # Seçilen ürünleri kaydetmek için
 def m2m_changed_cart_sender(sender,instance,action,*args,**kwargs):

@@ -23,6 +23,7 @@ EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+BASE_URL="http://127.0.0.1:8000"
 
 MANAGERS=(
     ("Mustafa Dalga","djangoicin2@gmail.com"),
@@ -60,7 +61,9 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL="accounts.User"  #changes the builin user model to ours
-
+LOGIN_URL="/login/"
+LOGIN_URL_REDIRECT="/"
+LOGOUT_URL="/logout/"
 
 
 
@@ -162,6 +165,12 @@ MEDIA_ROOT=os.path.join(BASE_DIR, "static", 'media_root')
 
 
 
+# Protected File:Ör sadece django eğitimini satın alan kişiler django eğitim dosyalarını indirebilsin.
+PROTECTED_ROOT=os.path.join(BASE_DIR, "static", 'protected_media')
+
+from ecommerce.aws.conf import *
+
+# https://www.codingforentrepreneurs.com/blog/ssltls-settings-for-django/
 
 CORS_REPLACE_HTTPS_REFERER      = False
 HOST_SCHEME                     = "http://"
@@ -172,6 +181,3 @@ CSRF_COOKIE_SECURE              = False
 SECURE_HSTS_SECONDS             = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
-
-
-

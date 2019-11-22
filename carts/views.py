@@ -71,17 +71,17 @@ def cart_update(request):
 
 def checkout_home(request):
     cart_obj, cart_created = Cart.objects.new_or_get(request)  # Sepet getirildi
-    # print("Sepet:")
-    # print(cart_obj)
-    # print(cart_created)
-    # print("******************")
+
+
     order_obj = None
     if cart_created or cart_obj.products.count() == 0:
         return redirect('cart:home')
-    login_form = LoginForm()
-    guest_form = GuestForm()
+    login_form = LoginForm(request=request)
+    guest_form = GuestForm(request=request)
     address_form = AddressForm()
     billing_address_id = request.session.get('billing_address_id', None)
+
+    shipping_address_required=not cart_obj.is_digital
     shipping_address_id = request.session.get('shipping_address_id', None)
 
     # Fatura Profili oluşturma oluşturmak için,manuel olarak oluşturulan bir metot billing->models.py>BillingProfileManager
@@ -98,7 +98,7 @@ def checkout_home(request):
             order_obj.shipping_address = Address.objects.get(id=shipping_address_id)
             del request.session['shipping_address_id']
         if billing_address_id:
-            order_obj.billing_address_id = Address.objects.get(id=billing_address_id)
+            order_obj.billing_address = Address.objects.get(id=billing_address_id)
             del request.session['billing_address_id']
         if billing_address_id or shipping_address_id:
             order_obj.save()
@@ -115,7 +115,7 @@ def checkout_home(request):
         if is_prepared:
             did_charge,crg_msg=billing_profile.charge(order_obj)
             if did_charge:
-                order_obj.mark_paid()
+                order_obj.mark_paid()#sort a signal for us
                 request.session['cart_items'] = 0
                 del request.session['cart_id']
                 if not billing_profile.user:
@@ -135,6 +135,7 @@ def checkout_home(request):
         'address_qs': address_qs,
         'has_card':has_card,
         'publish_key':STRIPE_PUB_KEY,
+        'shipping_address_required': shipping_address_required,
     }
     return render(request, 'carts/checkout.html', context)
 

@@ -126,4 +126,4 @@ dev/
 /site
 
 # mypy
-.mypy_cache/
+.mypy_cache/.env

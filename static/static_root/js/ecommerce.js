@@ -101,6 +101,54 @@ $(document).ready(function () {
 
     // Sepet güncelleme,sepete ekleme,çıkarma işlemleri
     var productForm = $(".form-product-ajax")
+
+
+
+
+    // Kullanıcının dijital ürünü satın alıp almadığını kontrol etme
+    function getOwnedProduct(productId,submitSpan) {
+        var actionEndPoint = "/orders/endpoint/verify/ownership/"
+        var httpMethod = "GET"
+        var data = {
+            product_id: productId
+        }
+        var isOwner;
+        $.ajax({
+            url: actionEndPoint,
+            method: httpMethod,
+            data: data,
+            success: function (data) {
+                // console.log(data.owner)
+                if (data.owner) {
+                    isOwner=true
+                    submitSpan.html('<a class="btn btn-link btn-warning my-2" href="/library/">In library</a>')
+                } else {
+                    isOwner=false
+                }
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+        return isOwner
+    }
+
+    // Satın alınan dijital ürünler için dosyalara erişme linki ekleme
+    $.each(productForm, function (index, object) {
+        var $this = $(this)
+        var isAUser = $this.attr("data-user")
+        var submitSpan = $this.find(".submit-span")
+        var productInput = $this.find("[name='product_id'")
+        var productId = productInput.attr("value")
+        var productIsDigital = productInput.attr("data-is-digital")
+
+        if (productIsDigital && isAUser) {
+            var isOwned = getOwnedProduct(productId,submitSpan);
+        }
+
+    })
+
+
     productForm.submit(function (event) {
         event.preventDefault();
         var thisForm = $(this)
@@ -117,7 +165,10 @@ $(document).ready(function () {
                 //Ürün detay için sepete ekle çıkar butonunu değiştirme
                 var submitSpan = thisForm.find(".submit-span")
                 if (data.added) {
-                    submitSpan.html('In Cart <button type="submit" class="btn btn-link">Remove</button>')
+                    submitSpan.html(' <div class="btn-group">\n' +
+                        '            <a href="/cart/" class="btn btn-link">  In Cart</a>\n' +
+                        '            <button type="submit" class="btn btn-link">Remove</button>\n' +
+                        '            </div>')
                 } else {
                     submitSpan.html(' <button type="submit" class="btn btn-success">Add to Cart</button>')
                 }

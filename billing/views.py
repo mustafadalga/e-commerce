@@ -37,11 +37,10 @@ def paymend_method_create_view(request):
 
 
         # Kart bilgilerini alma ve kaydetme(stripe.com)
-        print(request.POST)
         token=request.POST.get("token")
         if token is not None:
             new_card_obj=Card.objects.add_new(billing_profile,token)
-            print(new_card_obj)
+            # print(new_card_obj)
 
 
         return JsonResponse({'message':"Success! Your card was added."})

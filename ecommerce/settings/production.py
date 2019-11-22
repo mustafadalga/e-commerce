@@ -10,7 +10,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY=os.environ.get('SECRET_KEY')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -25,6 +24,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+BASE_URL="https://django-eticaret.herokuapp.com"
 
 MANAGERS=(
     ("Mustafa Dalga","djangoicin2@gmail.com"),
@@ -61,6 +61,9 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL="accounts.User"  #changes the builin user model to ours
+LOGIN_URL="/login/"
+LOGIN_URL_REDIRECT="/"
+LOGOUT_URL="/logout/"
 
 
 
@@ -168,7 +171,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR, "static", 'media_root')
 
 
+
+# Protected File:Ör sadece django eğitimini satın alan kişiler django eğitim dosyalarını indirebilsin.
+PROTECTED_ROOT=os.path.join(BASE_DIR, "static", 'protected_media')
+
 from ecommerce.aws.conf import *
+
+# https://www.codingforentrepreneurs.com/blog/ssltls-settings-for-django/
 
 CORS_REPLACE_HTTPS_REFERER      = True
 HOST_SCHEME                     = "https://"
@@ -179,6 +188,4 @@ CSRF_COOKIE_SECURE              = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
 SECURE_HSTS_SECONDS             = 1000000
 SECURE_FRAME_DENY               = True
-
-
 

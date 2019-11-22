@@ -8,6 +8,7 @@ from .views import (
     # ProductFeaturedListView,
     # ProductFeaturedDetailView,
     ProductDetailSlugView,
+    ProductDownloadView,
 )
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
     # path('products2/', product_list_view),
     # path('products/<int:pk>/', ProductDetailView.as_view()),
     re_path(r'^(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view(),name="detail"),
+    re_path(r'^(?P<slug>[\w-]+)/(?P<pk>\d+)$', ProductDownloadView.as_view(),name="download"),
     # path('products2/<int:pk>/', product_detail_view),
 ]

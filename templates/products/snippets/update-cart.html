@@ -1,11 +1,14 @@
 <form method="POST" action="{% url 'cart:update' %}" data-endpoint="{% url 'cart:update' %}"
-      class="form form-product-ajax">
+      class="form form-product-ajax" {% if request.user.is_authenticated %} data-user="abc" {% endif %} >
     {% csrf_token %}
-    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="product_id" value="{{ product.id }}"
+           data-is-digital="{% if product.is_digital %}true{% endif %}">
     <span class="submit-span">
         {% if product in cart.products.all %}
-            In Cart
+            <div class="btn-group">
+            <a href="/cart/" class="btn btn-link">  In Cart</a>
             <button type="submit" class="btn btn-link">Remove</button>
+            </div>
         {% else %}
             <button type="submit" class="btn btn-success">Add to Cart</button>
         {% endif %}

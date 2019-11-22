@@ -1,156 +1,1 @@
-
-from django.views.generic import ListView,DetailView
-from django.shortcuts import render,get_object_or_404
-from .models import Product
-from django.http import Http404
-from carts.models import Cart
-from analytics.mixins import ObjectViewedMixin
-
-# Create your views here.
-
-
-class ProductFeaturedListView(ListView):
-    template_name = "products/list.html"
-
-    #
-    # def get_queryset(self,*args,**kwargs):
-    #     request=self.request
-    #     return Product.objects.all()
-
-    def get_queryset(self,*args,**kwargs):
-        request=self.request
-        return Product.objects.all().featured()
-
-
-class ProductFeaturedDetailView(ObjectViewedMixin,DetailView):
-    # template_name = "products/featured-detail.html"
-    #
-    # def get_queryset(self,*args,**kwargs):
-    #     request=self.request
-    #     return Product.objects.featured()
-
-    # 2.yol
-    # queryset = Product.objects.all()
-    # template_name = "products/featured-detail.html"
-
-    # 3.Yol
-    queryset = Product.objects.all().featured()
-    template_name = "products/featured-detail.html"
-
-
-class ProductListView(ListView):
-    queryset = Product.objects.all()
-    template_name = "products/list.html"
-
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context=super(ProductListView,self).get_context_data(**kwargs)
-    #     print(context)
-    #     return context
-    #
-
-    def get_context_data(self,*args, **kwargs):
-        context=super(ProductListView,self).get_context_data(*args,**kwargs)
-        cart_obj, new_obj = Cart.objects.new_or_get(self.request)  # Yapılan isteğin sepet bilgileri
-        context['cart']=cart_obj   # Sepet Bilgileri
-        return context
-
-    # def get_queryset(self,*args,**kwargs):
-    #     request=self.request
-    #     return Product.objects.all()
-
-
-#Sadece bu yol kullanılacak
-def product_list_view(request):
-    queryset = Product.objects.all()
-    context={
-     'object_list':queryset
-    }
-    return render(request,"products/list.html",context)
-
-
-class ProductDetailSlugView(ObjectViewedMixin,DetailView):
-    queryset = Product.objects.all()
-    template_name = "products/detail.html"
-
-    def get_context_data(self,*args, **kwargs):
-        context=super(ProductDetailSlugView,self).get_context_data(*args,**kwargs)
-        cart_obj, new_obj = Cart.objects.new_or_get(self.request)  # Yapılan isteğin sepet bilgileri
-        context['cart']=cart_obj   # Sepet Bilgileri
-        return context
-
-    # def get_object(self, *args,**kwargs):
-    #     request=self.request
-    #     slug=self.kwargs.get('slug')
-    #
-    #     try:
-    #         instance=Product.objects.get(slug=slug,active=True)
-    #     except Product.DoesNotExist:
-    #         raise Http404("Not Found .. ")
-    #     except Product.MultipleObjectsReturned:
-    #         qs = Product.objects.filter(slug=slug,active=True)
-    #         instance=qs.first()
-    #     except Http404:
-    #         raise Http404("HTTP 404 HATASI")
-    #     return instance
-
-
-class ProductDetailView(ObjectViewedMixin,DetailView):
-    queryset = Product.objects.all()
-    template_name = "products/detail.html"
-
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context=super(ProductDetailView,self).get_context_data(**kwargs)
-        print(context)
-        context['abc']=123
-        return context
-
-    def get_object(self, *args,**kwargs):
-        request=self.request
-        pk=self.kwargs.get('pk')
-
-        instance = Product.objects.get_by_id(pk)
-        if instance is None:
-            raise Http404("Ürün bulunamadı CLASS")
-        return instance
-
-
-    # def get_queryset(self,*args,**kwargs):
-    #     request=self.request
-    #     pk = self.kwargs.get('pk')
-    #     return Product.objects.filter(pk=pk)
-
-#Sadece bu yol kullanılacak
-def product_detail_view(request,pk=None,*args,**kwargs):
-    # object=Product.objects.get(pk=pk)
-
-    # Yol 1
-    # instance=get_object_or_404(Product,pk=pk)
-
-
-    #Yol 2
-    # try:
-    #     instance=Product.objects.get(pk=pk)
-    # except Product.DoesNotExist:
-    #     raise Http404("Ürün bulunamadı!")
-    # except:
-    #     pass
-
-    # YOl 3
-    instance=Product.objects.get_by_id(pk)
-    if instance is None:
-        raise Http404("Ürün bulunamadı")
-    # print(instance)
-
-    # YOL 4
-    # qs=Product.objects.filter(id=pk)
-    # if qs.exists() and qs.count()==1:
-    #     instance=qs.first()
-    # else:
-    #     raise Http404("Ürün bulunamadı 2")
-
-    context={
-     'object':instance,
-    }
-    return render(request,"products/detail.html",context)
-
+from django.views.generic import ListView,DetailView,Viewfrom django.shortcuts import render,get_object_or_404,redirectfrom .models import Product,ProductFilefrom django.http import Http404,HttpResponse,HttpResponseRedirectfrom carts.models import Cartfrom analytics.mixins import ObjectViewedMixinfrom django.contrib.auth.mixins import LoginRequiredMixinfrom django.contrib import messagesimport osfrom wsgiref.util import FileWrapperfrom mimetypes import guess_typefrom django.conf import settingsfrom orders.models import ProductPurchase# Create your views here.class ProductFeaturedListView(ListView):    template_name = "products/list.html"    #    # def get_queryset(self,*args,**kwargs):    #     request=self.request    #     return Product.objects.all()    def get_queryset(self,*args,**kwargs):        request=self.request        return Product.objects.all().featured()class ProductFeaturedDetailView(ObjectViewedMixin,DetailView):    # template_name = "products/featured-detail.html"    #    # def get_queryset(self,*args,**kwargs):    #     request=self.request    #     return Product.objects.featured()    # 2.yol    # queryset = Product.objects.all()    # template_name = "products/featured-detail.html"    # 3.Yol    queryset = Product.objects.all().featured()    template_name = "products/featured-detail.html"class UserProductHistoryView(LoginRequiredMixin,ListView):    template_name = "products/user-history.html"    def get_context_data(self,*args, **kwargs):        context=super(UserProductHistoryView,self).get_context_data(*args,**kwargs)        cart_obj, new_obj = Cart.objects.new_or_get(self.request)  # Yapılan isteğin sepet bilgileri        context['cart']=cart_obj   # Sepet Bilgileri        return context    def get_queryset(self,*args,**kwargs):        request=self.request        views=request.user.objectviewed_set.by_model(Product,model_queryset=False)        return viewsclass ProductListView(ListView):    queryset = Product.objects.all()    template_name = "products/list.html"    # def get_context_data(self, *, object_list=None, **kwargs):    #     context=super(ProductListView,self).get_context_data(**kwargs)    #     return context    #    def get_context_data(self,*args, **kwargs):        context=super(ProductListView,self).get_context_data(*args,**kwargs)        cart_obj, new_obj = Cart.objects.new_or_get(self.request)  # Yapılan isteğin sepet bilgileri        context['cart']=cart_obj   # Sepet Bilgileri        return context    # def get_queryset(self,*args,**kwargs):    #     request=self.request    #     return Product.objects.all()#Sadece bu yol kullanılacakdef product_list_view(request):    queryset = Product.objects.all()    context={     'object_list':queryset    }    return render(request,"products/list.html",context)class ProductDetailSlugView(ObjectViewedMixin,DetailView):    queryset = Product.objects.all()    template_name = "products/detail.html"    def get_context_data(self,*args, **kwargs):        context=super(ProductDetailSlugView,self).get_context_data(*args,**kwargs)        cart_obj, new_obj = Cart.objects.new_or_get(self.request)  # Yapılan isteğin sepet bilgileri        context['cart']=cart_obj   # Sepet Bilgileri        return context    # def get_object(self, *args,**kwargs):    #     request=self.request    #     slug=self.kwargs.get('slug')    #    #     try:    #         instance=Product.objects.get(slug=slug,active=True)    #     except Product.DoesNotExist:    #         raise Http404("Not Found .. ")    #     except Product.MultipleObjectsReturned:    #         qs = Product.objects.filter(slug=slug,active=True)    #         instance=qs.first()    #     except Http404:    #         raise Http404("HTTP 404 HATASI")    #     return instanceclass ProductDownloadView(View):    def get(self,request,*args,**kwargs):        slug=kwargs.get("slug")        pk=kwargs.get("pk")        """            2. Yöntem            qs=Product.objects.filter(slug=slug)            if qs.count()!=1:                raise  Http404("Product not found")            product_obj=qs.first()            download_qs=product_obj.get_downloads().filter(pk=pk) #queryset ProductFile.objects.filter(product=product_obj)        """        """               content_Type list               https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types               """        download_qs=ProductFile.objects.filter(pk=pk,product__slug=slug)        if download_qs.count() != 1:            raise Http404("Download not found")        download_obj=download_qs.first()        # Permission checks        # İndirmek için kullanıcı gerekliyse ve giriş yapılmışsa        can_download=False        user_ready=True        if download_obj.user_required:            if not request.user.is_authenticated:                user_ready=False        purchased_products=Product.objects.none()        if download_obj.free:            can_download=True            # user_ready=True        else: # not free            purchased_products=ProductPurchase.objects.products_by_id(request) # Kullanıcının satın aldığı ürün id'leri            file_product_id = ProductFile.objects.filter(pk=pk).values("product_id").first()['product_id'] # İndirilecek dosyanın ait olduğu ürün id'si            if file_product_id in purchased_products: # Kullanıcı ilgili dosyanın ürününü satın almışsa indirme yapabilir.                can_download=True            # purchased_products=ProductPurchase.objects.products_by_request(request) # İlgili kullanıcının satın aldığı ürünler            # # if download_obj.product and purchased_products:            # if download_obj.product in purchased_products:            #     can_download=True        if not can_download or not user_ready:            messages.error(request,"You don't have access to download this item")            return redirect(download_obj.get_default_url())        aws_filepath=download_obj.generate_download_url()        return HttpResponseRedirect(aws_filepath)        # Local dosya indirme        # file_root=settings.PROTECTED_ROOT        # filepath=download_obj.file.path # .url /media/        # final_filepath=os.path.join(file_root,filepath)        # with open(final_filepath,'rb') as f:        #     #permission checks        #        #     wrapper=FileWrapper(f)        #     mimetype="application/force-download"        #     gussed_mimetype=guess_type(filepath[0])        #     if gussed_mimetype:        #         mimetype=gussed_mimetype        #     response=HttpResponse(wrapper,content_type=mimetype)        #     response['Content-Disposition']="attachment;filename=%s" %(download_obj.name)        #     response['X-SendFile']=str(download_obj.name)        #     return responseclass ProductDetailView(ObjectViewedMixin,DetailView):    queryset = Product.objects.all()    template_name = "products/detail.html"    def get_context_data(self, *, object_list=None, **kwargs):        context=super(ProductDetailView,self).get_context_data(**kwargs)        # print(context)        context['abc']=123        return context    def get_object(self, *args,**kwargs):        request=self.request        pk=self.kwargs.get('pk')        instance = Product.objects.get_by_id(pk)        if instance is None:            raise Http404("Ürün bulunamadı CLASS")        return instance    # def get_queryset(self,*args,**kwargs):    #     request=self.request    #     pk = self.kwargs.get('pk')    #     return Product.objects.filter(pk=pk)#Sadece bu yol kullanılacakdef product_detail_view(request,pk=None,*args,**kwargs):    # object=Product.objects.get(pk=pk)    # Yol 1    # instance=get_object_or_404(Product,pk=pk)    #Yol 2    # try:    #     instance=Product.objects.get(pk=pk)    # except Product.DoesNotExist:    #     raise Http404("Ürün bulunamadı!")    # except:    #     pass    # YOl 3    instance=Product.objects.get_by_id(pk)    if instance is None:        raise Http404("Ürün bulunamadı")    # print(instance)    # YOL 4    # qs=Product.objects.filter(id=pk)    # if qs.exists() and qs.count()==1:    #     instance=qs.first()    # else:    #     raise Http404("Ürün bulunamadı 2")    context={     'object':instance,    }    return render(request,"products/detail.html",context)

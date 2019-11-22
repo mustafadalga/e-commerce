@@ -12,6 +12,7 @@ STRIPE_SECRET_KEY=getattr(settings,'STRIPE_SECRET_KEY',"sk_test_53qdSBhMf6DpdVhk
 stripe.api_key = STRIPE_SECRET_KEY
 
 
+
 class BillingProfileManager(models.Manager):
     def new_or_get(self, request):
         user = request.user
