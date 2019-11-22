@@ -18,15 +18,15 @@ DEBUG = True
 Oluşan Hataları mail olarak yöneticiye göndermek için
 """
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'djangoicin2@gmail.com'
+EMAIL_HOST_USER = 'your email'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+DEFAULT_FROM_EMAIL=""
 BASE_URL="https://django-eticaret.herokuapp.com"
 
 MANAGERS=(
-    ("Mustafa Dalga","djangoicin2@gmail.com"),
+    ("FULL NAME", "Email"),
 )
 ADMINS=MANAGERS
 

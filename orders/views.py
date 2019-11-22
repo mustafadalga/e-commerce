@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView,DetailView,View
 from .models import Order,ProductPurchase
-from billing.models import BillingProfile
 from django.http import Http404,JsonResponse
 
 class OrderListView(LoginRequiredMixin,ListView):
@@ -13,8 +11,6 @@ class OrderListView(LoginRequiredMixin,ListView):
 
 class OrderDetailView(LoginRequiredMixin,DetailView):
     def get_object(self):
-        # return Order.objects.get(id=self.kwargs.get('id'))
-        # return Order.objects.get(slug=self.kwargs.get('slug'))
         qs=Order.objects.by_request(self.request).filter(order_id=self.kwargs.get('order_id'))
         if qs.count()==1:
             return qs.first()
@@ -23,7 +19,7 @@ class OrderDetailView(LoginRequiredMixin,DetailView):
 class LibraryView(LoginRequiredMixin,ListView):
     template_name = "orders/library.html"
     def get_queryset(self):
-        return ProductPurchase.objects.products_by_request(self.request)#.by_request(self.request).digital()
+        return ProductPurchase.objects.products_by_request(self.request)
 
 
 class VerifyOwnership(View):

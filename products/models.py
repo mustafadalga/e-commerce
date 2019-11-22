@@ -3,11 +3,9 @@ from django.db.models import Q
 from ecommerce.utils import unique_slug_generator,get_filename
 from django.db.models.signals import pre_save
 from django.urls import reverse
-from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from ecommerce.aws.utils import ProtectedS3BotoStorage
 from  ecommerce.aws.download.utils import AWSDownload
-import os
 
 
 class ProductQuerySet(models.query.QuerySet):
@@ -22,7 +20,7 @@ class ProductQuerySet(models.query.QuerySet):
                 Q(title__icontains=query) |
                 Q(description__icontains=query) |
                 Q(price__icontains=query) |
-                Q(tag__title__icontains=query)  # Tag models'i title sutunu Tags>models.py Tag'dan gelir.
+                Q(tag__title__icontains=query)
         )
         return self.filter(lookups).distinct()
 
@@ -32,11 +30,10 @@ class ProductManager(models.Manager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db)
 
-    # Sadece aktif olanların içerisinden işlem yap.
     def all(self):
         return self.get_queryset().active()
 
-    def featured(self):  # Produt.objects.featured()
+    def featured(self):
         return self.get_queryset().featured()
 
     def get_by_id(self, id):
@@ -49,7 +46,6 @@ class ProductManager(models.Manager):
         return self.get_queryset().active().search(query)
 
 
-# Create your models here.
 class Product(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField(blank=True, unique=True)
@@ -64,7 +60,6 @@ class Product(models.Model):
     objects = ProductManager()
 
     def get_absolute_url(self):
-        # return "/products/{slug}/".format(slug=self.slug)
         return reverse("products:detail", kwargs={'slug': self.slug})
 
     def __str__(self):
@@ -105,7 +100,7 @@ def upload_product_file_loc(instance,filename):
     if not slug:
         slug = unique_slug_generator(instance.product)
     location="products/{slug}/{id}/".format(slug=slug,id=id_)
-    return location+filename # path/to/filename.txt
+    return location+filename
 
 
 
@@ -113,10 +108,9 @@ def upload_product_file_loc(instance,filename):
 class ProductFile(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     name=models.CharField(max_length=120,null=True,blank=True)
-    file=models.FileField(upload_to=upload_product_file_loc,storage=ProtectedS3BotoStorage())#FileSystemStorage(location=settings.PROTECTED_ROOT))# Özel dosya yükleme konumu oluşturma
-    # filepath=models.TextField() # /protected/path/to/the/file
-    free=models.BooleanField(default=False)   # purchase required
-    user_required=models.BooleanField(default=False) # user doesn't matter
+    file=models.FileField(upload_to=upload_product_file_loc,storage=ProtectedS3BotoStorage())
+    free=models.BooleanField(default=False)
+    user_required=models.BooleanField(default=False)
 
 
     def __str__(self):

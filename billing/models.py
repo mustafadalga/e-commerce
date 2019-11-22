@@ -21,24 +21,11 @@ class BillingProfileManager(models.Manager):
         obj = None
         if user.is_authenticated:
             obj, created = self.model.objects.get_or_create(user=user, email=user.email)
-            # print("*************************")
-            "Kullanıcı girişi"
-            "logged in user checkout;remember payment stuff"
-            # print("Kullanıcı girişi")
-            # print(obj)
-            # print(created)
-            # print("*************************")
+
         elif guest_email_id is not None:  # Misafir kullanıcı fatura profili oluşturma
             guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
             obj, created = self.model.objects.get_or_create(
                 email=guest_email_obj.email)
-            # print("*************************")
-            "Misafir kullanıcı girişi"
-            "guest user checkout;auto reloads payments stuff"
-            # print("Misafir kullanıcı girişi")
-            # print(obj)
-            # print(created)
-            # print("*************************")
         else:
             pass
 
@@ -65,13 +52,6 @@ class BillingProfile(models.Model):
         return Charge.objects.do(self, order_obj, card)
 
     def get_cards(self):
-
-        """
-        Card.objects.filter(billing_profile=self)# ,active=True)
-        card_set ->Cart model'inden gelmektedir.
-         Cart modelinden BillingProfile modeline foreignkey bağlantısı yapıldığı
-          için böyle bir özellik oluştu.
-        """
         return self.card_set.all()
 
     def get_payment_method_url(self):
@@ -102,7 +82,6 @@ def billing_profile_created_receiver(sender, instance, *args, **kwargs):
         customer = stripe.Customer.create(
             email=instance.email
         )
-        # print(customer)
         instance.customer_id = customer.id
         # instance.save()
 

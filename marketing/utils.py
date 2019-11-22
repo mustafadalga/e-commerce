@@ -37,18 +37,6 @@ class Mailchimp(object):
     def get_members_endpoint(self):
         return self.list_endpoint+"/members"
 
-
-    #  # Abonelik durumunu değiştir
-    # def change_subcription_status(self,email,status="unsubscribed"):
-    #     hashed_email=get_subscriber_hash(email)
-    #     endpoint=self.get_members_endpoint()+"/"+hashed_email
-    #     data={
-    #         "status":self.check_valid_status(status)
-    #     }
-    #     r=requests.put(endpoint,auth=("",self.key),data=json.dumps(data))
-    #     return r.json()
-
-
     def change_subcription_status(self, email, status='unsubscribed'):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + "/" +  hashed_email

@@ -21,4 +21,3 @@ class MarketingPrefenceAdmin(admin.ModelAdmin):
 
 admin.site.register(MarketingPrefence,MarketingPrefenceAdmin)
 
-# Register your models here.

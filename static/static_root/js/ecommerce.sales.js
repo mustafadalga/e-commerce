@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     function renderChart(id, data, labels) {
 
-        //   var ctx = document.getElementById('myChart').getContext('2d');
         var ctx = $("#" + id);
         var myChart = new Chart(ctx, {
             type: 'line',

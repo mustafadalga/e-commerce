@@ -1,12 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
 from .models import Product,ProductFile
 
 
-class ProductFileInline(admin.TabularInline):# Product file class'ını Product ile birleştirir.
+class ProductFileInline(admin.TabularInline):
     model = ProductFile
-    extra = 1 # Default dosya sayısı 1
+    extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['__str__','slug']

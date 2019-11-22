@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sessions.models import Session
 from .signals import object_viewed_signal
-from django.db.models.signals import pre_save,post_save
+from django.db.models.signals import post_save
 from accounts.signals import user_logged_in
 from .utils import get_client_ip
 
@@ -16,7 +16,7 @@ FORCE_INACTIVE_USER_ENDSESSION=getattr(settings,'FORCE_INACTIVE_USER_ENDSESSION'
 
 class ObjectViewedQuerySet(models.query.QuerySet):
     def by_model(self,model_class,model_queryset=False):
-        c_type = ContentType.objects.get_for_model(model_class)  # model instance.__class__
+        c_type = ContentType.objects.get_for_model(model_class)
         qs = self.filter(content_type=c_type)
         if model_queryset:
             views_ids=[x.object_id for x in qs]
@@ -33,19 +33,14 @@ class ObjectViewedManager(models.Manager):
 
 
 class ObjectViewed(models.Model):
-    user=models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE) # User instance,instance.id
+    user=models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
     ip_address=models.CharField(max_length=220,blank=True,null=True)
-    content_type=models.ForeignKey(ContentType,on_delete=models.CASCADE) # User,Product,Order,Cart,Adress herhangi bir model olabilir. Tüm django modelleri select olarak listelenir.
-    object_id=models.PositiveIntegerField()  # User id,product id,order id
-    content_object=GenericForeignKey('content_type','object_id') # Product instance
+    content_type=models.ForeignKey(ContentType,on_delete=models.CASCADE)
+    object_id=models.PositiveIntegerField()
+    content_object=GenericForeignKey('content_type','object_id')
     timestamp=models.DateTimeField(auto_now_add=True)
 
     objects=ObjectViewedManager()
-
-
-    # X kullanıcı şu saat şunu görüntüledi
-    #content_type :Görüntülenen modeller
-    #object_id:görüntülenen modelin içerisindeki verilerin id'si    (content_type)Product modelinde,id'si(object_id) 5 olan ürün görüntülendi
 
     def __str__(self):
         return "%s viewed on %s" % (self.content_object,self.timestamp)
@@ -57,12 +52,8 @@ class ObjectViewed(models.Model):
 
 
 def object_viewed_receiver(sender,instance,request,*args,**kwargs):
-    # print("***********************")
     c_type=ContentType.objects.get_for_model(sender) # model instance.__class__
-    # print(sender)
-    # print(instance)
-    # print(request)
-    # print(request.user)
+
     user=None
     if request.user.is_authenticated:
         user=request.user
@@ -109,10 +100,8 @@ class UserSession(models.Model):
 
 #kullanıcı giriş yaptığında, diğer tüm oturumlarını kapatma
 def post_save_session_receiver(sender,instance,created,*args,**kwargs):
-    print("Oturum kapatma")
     if created:
         # Aynı kullanıcnın diğer oturumlarını kapatma
-        print("Diğer Oturum kapatma")
         qs=UserSession.objects.filter(user=instance.user,ended=False,active=True).exclude(id=instance.id)
         for i in qs:
             i.end_session()
@@ -124,9 +113,7 @@ if FORCE_SESSION_TO_ONE:
 
 def post_save_user_changed_receiver(sender,instance,created,*args,**kwargs):
     if not created:
-        print("post_save_user_changed_receiver")
         if instance.is_active==False:
-            print("post_save_user_changed_receiver 2 ")
             qs = UserSession.objects.filter(user=instance.user, ended=False, active=True).exclude(id=instance.id)
             for i in qs:
                 i.end_session()
@@ -139,8 +126,6 @@ if FORCE_INACTIVE_USER_ENDSESSION:
 
 # Kullanıcı giriş yaptığında kullanıcı bilgilerini kaydetme
 def user_logged_in_receiver(sender,instance,request,*args,**kwargs):
-    print(instance)
-    print("Kullanıcı Girişi")
     user=instance
     ip_address=get_client_ip(request)
     session_key=request.session.session_key

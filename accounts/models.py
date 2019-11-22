@@ -106,20 +106,10 @@ class User(AbstractBaseUser):
     def is_admin(self):
         return self.admin
 
-    # Varsayılan olarak http://127.0.0.1:8000/register/ kayıt olunan kullanıcılar için active=False olarak belirlenmiştir.
-    # active=False olan kullanıcılar kayıtlı olsa bile kullanıcı girişi yapamaz.(http://127.0.0.1:8000/login/)
-    # Aktif pasif özelliğini aşağıdaki metot sağlar.
+class EmailActivationManagerQuerySet(models.query.QuerySet):
 
-    # @property
-    # def is_active(self):
-    #     return self.active
-
-class EmailActivationManagerQuerySet(models.query.QuerySet): # EmailActivation.objects.all().confirmable()
-
-    # Aktivasyon kodu geçerlilik süresini kontrol etme
     def confirmable(self):
         now=timezone.now()
-        # does my object have a timestamp in here
         start_range=now - timedelta(days=DEFAULT_ACTIVATION_DAYS)
         end_range=now
 
@@ -131,24 +121,7 @@ class EmailActivationManagerQuerySet(models.query.QuerySet): # EmailActivation.o
             timestamp__gt=start_range,
             timestamp__lte=end_range
         )
-        # gt:daha büyük
-    """
-      ('gt', 'Büyüktür'),
-     ('gte', 'Büyük veya eşit'),
-     ('lte', 'Daha küçük veya ona eşit'),
-    ('exact', 'Is equal to'),
-    ('not_exact', 'Is not equal to'),
-    ('lt', 'Lesser than'),
-    ('gt', 'Greater than'),
-    ('gte', 'Greater than or equal to'),
-    ('lte', 'Lesser than or equal to'),
-    ('startswith', 'Starts with'),
-    ('endswith', 'Ends with'),
-    ('contains', 'Contains'),
-    ('not_contains', 'Does not contain'),
 
-
-    """
 
 class EmailActivationManager(models.Manager):
     def get_queryset(self):
@@ -188,10 +161,8 @@ class EmailActivation(models.Model):
     def activate(self):
         if self.can_activate():
             user=self.user
-            # pre activation user signal
             user.is_active=True
             user.save()
-            # post activation signal for user
             self.activated=True
             self.save()
             return True
@@ -234,41 +205,26 @@ class EmailActivation(models.Model):
 
 
 def pre_save_email_activation(sender,instance,*args,**kwargs):
-    print("****")
-    print("1")
-    print("****")
+
     if not instance.activated and not instance.forced_expired:
-        print("2")
         if not instance.key:
-            print("3")
             instance.key=unique_key_generator(instance)
 
 pre_save.connect(pre_save_email_activation,sender=EmailActivation)
 
 def post_save_user_create_receiver(sender,instance,created,*args,**kwargs):
-    print("****")
-    print("4")
-    print("****")
     if created:
         obj=EmailActivation.objects.create(user=instance,email=instance.email)
-        print("5")
         obj.send_activation()
 
 post_save.connect(post_save_user_create_receiver,sender=User)
-"""
- 1 Kullanıcı hesabı oluşturulduğunda doğrulama maili gönder
- 2 
-"""
 
 
-# Create your models here.
 class GuestEmail(models.Model):
     email=models.EmailField()
     active=models.BooleanField(default=True)
     update=models.DateTimeField(auto_now=True)
     timestamp=models.DateTimeField(auto_now_add=True)
-
-
 
     def __str__(self):
         return self.email

@@ -1,18 +1,13 @@
-from django.shortcuts import render
 from products.models import Product
 from django.views.generic import ListView
 
-
-
 class SearchProductView(ListView):
     template_name = "search/view.html"
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context=super(SearchProductView,self).get_context_data(**kwargs)
         query=self.request.GET.get('q')
         context['query']=query
-        # SearchQuery.objects.create(query=query)
         return context
 
     def get_queryset(self,*args,**kwargs):

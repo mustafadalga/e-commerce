@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import redirect
 from .forms import MarketingPrefenceForm
 from .models import MarketingPrefence
 from django.views.generic import UpdateView,View
@@ -20,7 +20,7 @@ class MarketingPrefenceUpdateView(SuccessMessageMixin,UpdateView):
     def dispatch(self, *args, **kwargs):
         user = self.request.user
         if not user.is_authenticated:
-            return redirect("/login/?next=/settings/email/")# HttpResponse("Not allowed", status=400)
+            return redirect("/login/?next=/settings/email/")
         return super(MarketingPrefenceUpdateView,self).dispatch(*args,**kwargs)
 
 
@@ -36,26 +36,8 @@ class MarketingPrefenceUpdateView(SuccessMessageMixin,UpdateView):
         return obj
 
 
-"""
-data[merges][LNAME]:
-data[id]: 66d177a222
-data[action]: unsub
-data[merges][ADDRESS]:
-data[email]: fatih@gmail.com
-data[merges][BIRTHDAY]:
-data[web_id]: 57733545
-data[merges][FNAME]:
-data[merges][EMAIL]: fatih@gmail.com
-data[ip_opt]: 95.2.10.156
-fired_at: 2019-10-02 16:30:46
-data[list_id]: 3e6f34b9b6
-data[reason]: manual
-data[email_type]: html
-type: unsubscribe
-data[merges][PHONE]:
-"""
 
-class MailchimpWebhookView(CsrfExemptMixin,View):  # HTTP GET -- def get()
+class MailchimpWebhookView(CsrfExemptMixin,View):
     def get(self,request,*args,**kwargs):
         return HttpResponse("Thank you", status=200)
 
@@ -63,7 +45,7 @@ class MailchimpWebhookView(CsrfExemptMixin,View):  # HTTP GET -- def get()
         data = request.POST
         list_id = data.get("data[id]")
         if str(list_id) == str(MAILCHIP_EMAIL_LIST_ID):
-            hook_type = data.get("type")
+            #hook_type = data.get("type")
             email = data.get("data[email]")
             response_status, response = Mailchimp().check_subcription_status(email)
             sub_status = response['status']
@@ -81,26 +63,3 @@ class MailchimpWebhookView(CsrfExemptMixin,View):  # HTTP GET -- def get()
 
         return HttpResponse("Thank you", status=200)
 
-# def mailchimp_webhook_view(request):
-#     data=request.POST
-#     list_id=data.get("data[id]")
-#     if str(list_id)==str(MAILCHIP_EMAIL_LIST_ID):
-#         hook_type = data.get("type")
-#         email = data.get("data[email]")
-#         response_status,response=Mailchimp().check_subcription_status(email)
-#         sub_status=response['status']
-#         is_subbed=None
-#         mailchimp_subbed=None
-#         if sub_status=="subscribed":
-#             is_subbed,mailchimp_subbed=(True,True)
-#         elif sub_status=="unsubscribed":
-#             is_subbed, mailchimp_subbed = (False, False)
-#
-#
-#         if is_subbed is not None and mailchimp_subbed is not None:
-#             qs = MarketingPrefence.objects.filter(user__email__iexact=email)
-#             if qs.exist():
-#                 qs.update(subscribed=is_subbed, mailchimp_subscribed=mailchimp_subbed, mailchimp_msg=str(data))
-#
-#
-#     return HttpResponse("Thank you",status=200)

@@ -12,10 +12,6 @@
 <div class="jumbotron text-center">
   <h1>{{ mesaj }}</h1>
     <img src="{% static 'img/resim1.jpg' %}" class="img-fluid" alt="" width="300" height="150"/>
-  <p>Resize this responsive page to see the effect!</p>
-    {% if request.user.is_authenticated %}
-        <p>{{ premium }}</p>
-    {% endif %}
 </div>
 
 <div class="container">

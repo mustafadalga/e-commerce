@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.generic import TemplateView, View
-from django.db.models import Count, Sum, Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from orders.models import Order
 
@@ -28,14 +27,13 @@ class SalesAjaxView(View):
                             new_time
                         )
                     labels.append(
-                        new_time.strftime("%a") # mon
+                        new_time.strftime("%a")
                     )
                     new_qs = qs.filter(updated__day=new_time.day, updated__month=new_time.month)
                     day_total = new_qs.totals_data()['total__sum'] or 0
                     salesItems.append(
                         day_total
                     )
-                #print(datetime_list)
 
                 data['labels'] = labels
                 data['data'] = salesItems

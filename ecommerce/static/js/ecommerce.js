@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    // İletişim Formu
     var contactForm = $(".contact-form")
     var contactFormMethod = contactForm.attr("method")
     var contactFormEndpoint = contactForm.attr("action")
@@ -63,7 +62,6 @@ $(document).ready(function () {
     })
 
 
-    // ********************************************************************************
 
     //Arama İşlemleri
     var searchForm = $(".search-form")
@@ -72,13 +70,11 @@ $(document).ready(function () {
     var typingInterval = 1500
     var searchBtn = searchForm.find("[type='submit'")
 
-    // elini tuştan kaldırdığında
     searchInput.keyup(function (event) {
         clearTimeout(typeingTimer)
         typeingTimer = setTimeout(perfomSearch, typingInterval)
     })
 
-    //tuşa basıldığında
     searchInput.keydown(function (event) {
         clearTimeout(typeingTimer)
     })
@@ -97,7 +93,6 @@ $(document).ready(function () {
         }, 1000)
     }
 
-    // ********************************************************************************//
 
     // Sepet güncelleme,sepete ekleme,çıkarma işlemleri
     var productForm = $(".form-product-ajax")
@@ -118,7 +113,6 @@ $(document).ready(function () {
             method: httpMethod,
             data: data,
             success: function (data) {
-                // console.log(data.owner)
                 if (data.owner) {
                     isOwner=true
                     submitSpan.html('<a class="btn btn-link btn-warning my-2" href="/library/">In library</a>')
@@ -152,7 +146,6 @@ $(document).ready(function () {
     productForm.submit(function (event) {
         event.preventDefault();
         var thisForm = $(this)
-        //var actionEnpoint = thisForm.attr("action")
         var httpMethod = thisForm.attr("method")
         var actionEndPoint = thisForm.attr("data-endpoint")
         var formData = thisForm.serialize();
@@ -162,7 +155,6 @@ $(document).ready(function () {
             data: formData,
             success: function (data) {
 
-                //Ürün detay için sepete ekle çıkar butonunu değiştirme
                 var submitSpan = thisForm.find(".submit-span")
                 if (data.added) {
                     submitSpan.html(' <div class="btn-group">\n' +
@@ -173,10 +165,10 @@ $(document).ready(function () {
                     submitSpan.html(' <button type="submit" class="btn btn-success">Add to Cart</button>')
                 }
                 var navbarCount = $(".navbar-cart-count")
-                navbarCount.text(data.cartItemCount) // Sepetteki ürün sayısını değiştirme
+                navbarCount.text(data.cartItemCount)
                 var currentPath = window.location.href
                 if (currentPath.indexOf("cart") != -1) {
-                    refreshCart()   //Sepetimdeki ürünleri güncelleme
+                    refreshCart()
                 }
             },
             error: function (errorData) {

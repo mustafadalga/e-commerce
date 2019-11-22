@@ -50,11 +50,10 @@ def get_month_data_range(months_ago=1, include_this_month=False):
             "year": start.year,
             "month": str(start.strftime("%B"))
         })
-    #dates_.reverse()
     return dates_
 
 
-def get_filename(path): #folder/sasa.mp3
+def get_filename(path):
     return os.path.basename(path)
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):

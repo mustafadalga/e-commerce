@@ -13,9 +13,6 @@ stripe.api_key=STRIPE_SECRET_KEY
 
 # http://127.0.0.1:8000/billing/payment-method/?next=/billing/    Add Payment Method
 def paymend_method_view(request):
-    # if request.user.is_authenticated:
-    #     billing_profile=request.user.billingprofile
-    #     my_customer_id=billing_profile.customer_id
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
 
     if not billing_profile:
@@ -34,13 +31,10 @@ def paymend_method_create_view(request):
         if not billing_profile:
             return HttpResponse({"message":"Bu kullanıcı bulunamadı"}, status=401)
 
-
-
         # Kart bilgilerini alma ve kaydetme(stripe.com)
         token=request.POST.get("token")
         if token is not None:
             new_card_obj=Card.objects.add_new(billing_profile,token)
-            # print(new_card_obj)
 
 
         return JsonResponse({'message':"Success! Your card was added."})
