@@ -1,26 +1,16 @@
-from django.contrib.auth import authenticate, login,get_user_model
 from django.shortcuts import redirect,render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views.generic import CreateView,FormView,DetailView,View,UpdateView
 from django.views.generic.edit import FormMixin
 from .forms import LoginForm,RegisterForm,GuestForm,ReactiveEmailForm,UserDetailChangeForm
-from django.utils.http import is_safe_url
 from ecommerce.mixins import NextUrlMixin,RequestFormAttachMixin
 
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import GuestEmail,EmailActivation
-from .signals import user_logged_in
+from .models import EmailActivation
 
-
-# Yöntem 1
-# @login_required   # /accounts/login/?next=/some/path/
-# def account_home_view(request):
-#     return render(request,"accounts/home.html")
 
 # Yöntem 2 ,
 class AccountHomeView(LoginRequiredMixin,DetailView):
@@ -96,12 +86,6 @@ class GuestRegisterView(NextUrlMixin,RequestFormAttachMixin,CreateView):
     def form_invalid(self, form):
         return redirect(self.default_next)
 
-    # def form_valid(self, form):
-    #     request=self.request
-    #     email = form.cleaned_data.get('email')
-    #     new_guest_email = GuestEmail.objects.create(email=email)
-    #     return redirect(self.get_next_url())
-
 
 class LoginView(NextUrlMixin,RequestFormAttachMixin,FormView):
     form_class = LoginForm
@@ -115,31 +99,6 @@ class LoginView(NextUrlMixin,RequestFormAttachMixin,FormView):
 
 
 
-#      #/cart/chechout.html adresinden gelir
-#     # /cart/checkout/ ,fatura profili görüntülendiğinde giriş yapmayan kullanıcılar için giriş yaptıktan sonra tekrar fatura profiline yönlendirmek için alınan url
-#     # login formu ,accounts ve carts componenti olarak iki yerde kullanılmaktadır.
-#     next_post=request.POST.get('next')
-#     redirect_path=next_ or next_post or None
-#     if form.is_valid():
-#         # print(form.cleaned_data)
-#         username=form.cleaned_data.get('username')
-#         password=form.cleaned_data.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request,user)
-#             try:
-#                 del request.session['guest_email_id']
-#             except:
-#                 pass
-#             if is_safe_url(redirect_path,request.get_host()):
-#                 return redirect(redirect_path)
-#             else:
-#                 return redirect('/')
-#         else:
-#             print("ERROR")
-#
-#     return render(request,'accounts/login.html',context)
-
 
 class RegisterView(CreateView):
     form_class = RegisterForm
@@ -149,7 +108,6 @@ class RegisterView(CreateView):
 class UserDetailUpdateView(LoginRequiredMixin,UpdateView):
     form_class =UserDetailChangeForm
     template_name = "accounts/detail-update-view.html"
-    # success_url = "/account/"
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -163,19 +121,6 @@ class UserDetailUpdateView(LoginRequiredMixin,UpdateView):
         return reverse("account:home")
 
 
-# User=get_user_model()
-# def register_page(request):
-#     form=RegisterForm(request.POST or None)
-#     context = {
-#         'form': form,
-#     }
-#     if form.is_valid():
-#         form.save()
-#         # username = form.cleaned_data.get('username')
-#         # email = form.cleaned_data.get('email')
-#         # password = form.cleaned_data.get('password')
-#         # user=User.objects.create_user(username=username,email=email,password=password)
-#     return render(request,'accounts/register.html',context)
 
 
 
