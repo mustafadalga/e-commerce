@@ -1,3 +1,73 @@
+import os
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'pe(q8#hs8b2c#_l*iu=np=3dt!l&$b@k8+=qu(5#johj0$(1rn'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+"""
+Oluşan Hataları mail olarak yöneticiye göndermek için
+"""
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangoicin2@gmail.com'
+EMAIL_HOST_PASSWORD = 'TestAmacli.34'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+BASE_URL="http://127.0.0.1:8000"
+
+MANAGERS=(
+    ("Full Name","youremail"),
+)
+ADMINS=MANAGERS
+
+ALLOWED_HOSTS = []
+
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # Third party
+    'storages',
+
+    # Our apps
+    'products',
+    'accounts',
+    'analytics',
+    'addresses',
+    'billing',
+    'orders',
+    'marketing',
+    'search',
+    'tags',
+    'carts',
+]
+
+AUTH_USER_MODEL="accounts.User"  #changes the builin user model to ours
+LOGIN_URL="/login/"
+LOGIN_URL_REDIRECT="/"
+LOGOUT_URL="/logout/"
+
+
+
+
+
+
+
+
 
 import os
 
@@ -12,7 +82,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY=os.environ.get('SECRET_KEY')
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 
 """
@@ -20,11 +90,11 @@ Oluşan Hataları mail olarak yöneticiye göndermek için
 """
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'djangoicin2@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = 'TestAmacli.34'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
-BASE_URL="https://django-eticaret.herokuapp.com"
+BASE_URL="https://django-eticaret.herokuapp.com/"
 
 MANAGERS=(
     ("Mustafa Dalga","djangoicin2@gmail.com"),
@@ -67,15 +137,15 @@ LOGOUT_URL="/logout/"
 
 
 
-
-MAILCHIP_API_KEY=os.environ.get("MAILCHIP_API_KEY")
+MAILCHIP_API_KEY="fb6526b7c95389d644dd04f632b29bf3-us20"
 MAILCHIP_DATA_CENTER="us20"
-MAILCHIP_EMAIL_LIST_ID=os.environ.get("MAILCHIP_EMAIL_LIST_ID")
+MAILCHIP_EMAIL_LIST_ID="3e6f34b9b6"
+STRIPE_SECRET_KEY="sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu" # Secret key
+STRIPE_PUB_KEY="pk_test_5wkb1M4U4Z0WN44BcoH2XnXJ00pa2DsSqv" #Publishable key
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION= False
-STRIPE_SECRET_KEY=os.environ.get("STRIPE_SECRET_KEY","sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu")
-STRIPE_PUB_KEY=os.environ.get("STRIPE_PUB_KEY","pk_test_5wkb1M4U4Z0WN44BcoH2XnXJ00pa2DsSqv")
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -188,4 +258,6 @@ CSRF_COOKIE_SECURE              = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
 SECURE_HSTS_SECONDS             = 1000000
 SECURE_FRAME_DENY               = True
+
+
 
