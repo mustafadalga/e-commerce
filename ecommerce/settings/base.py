@@ -18,11 +18,11 @@ DEBUG = True
 Oluşan Hataları mail olarak yöneticiye göndermek için
 """
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'djangoicin2@gmail.com'
+EMAIL_HOST_USER = 'youremail@gmail.com'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+DEFAULT_FROM_EMAIL="youremail@gmail.com"
 BASE_URL="http://127.0.0.1:8000"
 
 MANAGERS=(
