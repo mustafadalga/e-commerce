@@ -1,11 +1,11 @@
 import datetime
 import os
 
-AWS_GROUP_NAME="eticaretproje"
-AWS_USERNAME="djangoecommerce"
+AWS_GROUP_NAME=""
+AWS_USERNAME=""
 
-AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID","AKIAYD47F3A3NVCXXQOG")
-AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY","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")
+AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID","")
+AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY","")
 
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
@@ -13,7 +13,7 @@ AWS_QUERYSTRING_AUTH =False
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
-AWS_STORAGE_BUCKET_NAME = 'eticaretbucketpolicy'
+AWS_STORAGE_BUCKET_NAME = ''
 S3DIRECT_REGION = 'us-east-2'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
