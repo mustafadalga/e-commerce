@@ -23,11 +23,11 @@ EMAIL_HOST_USER = 'djangoicin2@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL="djangoicin2@gmail.com"
+DEFAULT_FROM_EMAIL="email@gmail.com"
 BASE_URL="https://django-eticaret.herokuapp.com"
 
 MANAGERS=(
-    ("Mustafa Dalga","djangoicin2@gmail.com"),
+    ("Mustafa Dalga","email@gmail.com"),
 )
 ADMINS=MANAGERS
 
@@ -74,8 +74,8 @@ MAILCHIP_EMAIL_LIST_ID=os.environ.get("MAILCHIP_EMAIL_LIST_ID")
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION= False
-STRIPE_SECRET_KEY=os.environ.get("STRIPE_SECRET_KEY","sk_test_53qdSBhMf6DpdVhkomQzAkSD00t9IcQotu")
-STRIPE_PUB_KEY=os.environ.get("STRIPE_PUB_KEY","pk_test_5wkb1M4U4Z0WN44BcoH2XnXJ00pa2DsSqv")
+STRIPE_SECRET_KEY=os.environ.get("STRIPE_SECRET_KEY","")
+STRIPE_PUB_KEY=os.environ.get("STRIPE_PUB_KEY","")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
